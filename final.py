@@ -321,25 +321,25 @@ warnings.filterwarnings('ignore')
 df = pd.read_csv("goodreads_dataset_10000_FINAL.csv", sep=';', decimal=',')
 
 print("=" * 80)
-print("📊 DATA INSPECTION - INITIAL DATA EXPLORATION")
+print(" DATA INSPECTION - INITIAL DATA EXPLORATION")
 print("=" * 80)
 
 # 1.1. View first records
-print("\n🔎 1. FIRST 5 RECORDS TO UNDERSTAND STRUCTURE:")
+print("\n 1. FIRST 5 RECORDS TO UNDERSTAND STRUCTURE:")
 print(df.head())
 
 # 1.2. General information about data structure
-print("\n📋 2. GENERAL DATAFRAME INFORMATION:")
+print("\n 2. GENERAL DATAFRAME INFORMATION:")
 print(f"Dataset size: {df.shape[0]} rows, {df.shape[1]} columns\n")
 print("Data types and missing values information:")
 print(df.info())
 
 # 1.3. Statistical description of numerical columns
-print("\n📈 3. STATISTICAL DESCRIPTION OF NUMERICAL COLUMNS:")
+print("\n 3. STATISTICAL DESCRIPTION OF NUMERICAL COLUMNS:")
 print(df.describe(include=[np.number]))
 
 # 1.4. Statistical description of text columns
-print("\n📝 4. STATISTICAL DESCRIPTION OF TEXT COLUMNS:")
+print("\n 4. STATISTICAL DESCRIPTION OF TEXT COLUMNS:")
 print(df.describe(include=[object]))
 
 # ========================
@@ -347,7 +347,7 @@ print(df.describe(include=[object]))
 # ========================
 
 print("=" * 80)
-print("🔍 MISSING VALUES ANALYSIS")
+print(" MISSING VALUES ANALYSIS")
 print("=" * 80)
 
 # 2.1. Count missing values by column
@@ -359,10 +359,10 @@ missing_df = pd.DataFrame({
     'Percentage Missing': missing_percentage.round(2)
 })
 
-print("\n📊 MISSING VALUES BY COLUMN:")
+print("\n MISSING VALUES BY COLUMN:")
 print(missing_df[missing_df['Missing Values'] > 0])
 
-print("\n💡 INSIGHTS:")
+print("\n INSIGHTS:")
 print("We will remove ALL rows that contain ANY missing values")
 print("This ensures complete data for analysis")
 
@@ -371,15 +371,15 @@ print("This ensures complete data for analysis")
 # ========================
 
 print("=" * 80)
-print("🔍 DUPLICATES ANALYSIS")
+print(" DUPLICATES ANALYSIS")
 print("=" * 80)
 
 # 3.1. Check for complete duplicates
 full_duplicates = df.duplicated().sum()
-print(f"\n🔍 Complete duplicates (all columns match): {full_duplicates}")
+print(f"\n Complete duplicates (all columns match): {full_duplicates}")
 
 # 3.2. Check duplicates by key fields
-print("\n🔍 Checking duplicates by title and author:")
+print("\n Checking duplicates by title and author:")
 title_author_duplicates = df.duplicated(subset=['Title', 'Author']).sum()
 print(f"Duplicates by Title + Author: {title_author_duplicates}")
 
@@ -388,7 +388,7 @@ if title_author_duplicates > 0:
     duplicates = df[df.duplicated(subset=['Title', 'Author'], keep=False)]
     print(duplicates[['Title', 'Author']].head(10))
 
-print("\n💡 INSIGHTS:")
+print("\n INSIGHTS:")
 print("We will remove duplicates to ensure data quality")
 
 # ========================
@@ -396,14 +396,14 @@ print("We will remove duplicates to ensure data quality")
 # ========================
 
 print("=" * 80)
-print("🔧 DATA TYPES ANALYSIS AND CONVERSION")
+print(" DATA TYPES ANALYSIS AND CONVERSION")
 print("=" * 80)
 
-print("\n📊 CURRENT DATA TYPES:")
+print("\n CURRENT DATA TYPES:")
 print(df.dtypes)
 
 # 4.1. Check numerical columns for non-numeric values
-print("\n🔍 Checking numerical columns for anomalies:")
+print("\n Checking numerical columns for anomalies:")
 
 numeric_cols = ['Avg_Rating', 'Ratings_Count', 'Number of Reviews', 'Year', 'Number of Pages']
 for col in numeric_cols:
@@ -417,7 +417,7 @@ for col in numeric_cols:
 # ========================
 
 print("=" * 80)
-print("🧹 STARTING DATA CLEANING PROCESS")
+print(" STARTING DATA CLEANING PROCESS")
 print("=" * 80)
 
 # Store original data shape
@@ -425,7 +425,7 @@ original_shape = df.shape
 print(f"Original dataset shape: {original_shape[0]} rows, {original_shape[1]} columns")
 
 # 5.1. Text Fields Cleaning
-print("\n📚 TEXT FIELDS CLEANING:")
+print("\n TEXT FIELDS CLEANING:")
 
 # 5.1.1. Book titles cleaning
 if 'Title' in df.columns:
@@ -445,10 +445,10 @@ if 'Author' in df.columns:
 
 # 5.2. REMOVE ALL ROWS WITH ANY MISSING VALUES
 print("\n" + "=" * 80)
-print("🗑️ REMOVING ALL ROWS WITH ANY MISSING VALUES")
+print(" REMOVING ALL ROWS WITH ANY MISSING VALUES")
 print("=" * 80)
 
-print("\n💡 STRATEGY: Remove any row that contains at least one empty cell")
+print("\n STRATEGY: Remove any row that contains at least one empty cell")
 print("This creates a complete dataset without any missing values")
 
 # Count missing values before removal
@@ -480,7 +480,7 @@ else:
 
 # 5.3. Remove duplicates
 print("\n" + "=" * 80)
-print("🔍 REMOVING DUPLICATES")
+print(" REMOVING DUPLICATES")
 print("=" * 80)
 
 # Remove complete duplicates
@@ -496,11 +496,11 @@ if 'Title' in df.columns and 'Author' in df.columns:
         df = df.drop_duplicates(subset=['Title', 'Author'], keep='first')
         print(f"✓ Removed {title_author_dups} duplicates by Title+Author")
 
-print("✅ Duplicate removal complete")
+print(" Duplicate removal complete")
 
 # 5.4. Convert data types properly
 print("\n" + "=" * 80)
-print("🔢 CONVERTING DATA TYPES")
+print(" CONVERTING DATA TYPES")
 print("=" * 80)
 
 # Convert Avg_Rating to float
@@ -520,7 +520,7 @@ print("✅ Data type conversion complete")
 
 # 5.5. Data validation
 print("\n" + "=" * 80)
-print("✅ DATA VALIDATION")
+print(" DATA VALIDATION")
 print("=" * 80)
 
 # Validate rating range (0-5)
@@ -572,14 +572,14 @@ print("✅ Data validation complete")
 # ========================
 
 print("=" * 80)
-print("✨ CREATING 2 DERIVED FEATURES")
+print(" CREATING 2 DERIVED FEATURES")
 print("=" * 80)
 
-print("\n💡 EXPLANATION: We will add only 2 new columns derived from existing data")
+print("\n EXPLANATION: We will add only 2 new columns derived from existing data")
 print("These features will provide additional insights for analysis.")
 
 # 6.1. Feature 1: Book Age (years since publication)
-print("\n1. 📅 CREATING 'Book_Age' FEATURE:")
+print("\n1.  CREATING 'Book_Age' FEATURE:")
 
 if 'Year' in df.columns:
     current_year = pd.Timestamp.now().year
@@ -595,7 +595,7 @@ else:
     print("   Skipped: 'Year' column not found")
 
 # 6.2. Feature 2: Reviews to Ratings Ratio
-print("\n2. 📊 CREATING 'Reviews_to_Ratings_Ratio' FEATURE:")
+print("\n2.  CREATING 'Reviews_to_Ratings_Ratio' FEATURE:")
 
 if 'Number of Reviews' in df.columns and 'Ratings_Count' in df.columns:
     # Avoid division by zero
@@ -622,15 +622,15 @@ print("2. Reviews_to_Ratings_Ratio - Percentage of raters who write reviews")
 # ========================
 
 print("=" * 80)
-print("✅ FINAL VERIFICATION AND SAVING")
+print(" FINAL VERIFICATION AND SAVING")
 print("=" * 80)
 
 # 7.1. Final data information
-print("\n📋 FINAL DATAFRAME INFORMATION:")
+print("\n FINAL DATAFRAME INFORMATION:")
 print(f"Cleaned dataset shape: {df.shape[0]} rows, {df.shape[1]} columns")
 print(f"Original columns: {original_shape[1]}, New columns added: {df.shape[1] - original_shape[1]}")
 
-print("\n📊 DATA TYPES AFTER CLEANING:")
+print("\n DATA TYPES AFTER CLEANING:")
 print(df.dtypes)
 
 # 7.2. Check for missing values after cleaning
@@ -646,7 +646,7 @@ else:
         print(f"  {col}: {count} missing values")
 
 # 7.3. Summary of cleaning process
-print("\n📊 CLEANING PROCESS SUMMARY:")
+print("\n CLEANING PROCESS SUMMARY:")
 print(f"Original dataset: {original_shape[0]} rows, {original_shape[1]} columns")
 print(f"Cleaned dataset: {df.shape[0]} rows, {df.shape[1]} columns")
 print(f"Rows removed due to missing values: {original_shape[0] - rows_after:,}")
@@ -654,7 +654,7 @@ print(f"Percentage of original data kept: {(df.shape[0] / original_shape[0] * 10
 print(f"New features created: 2 (Book_Age, Reviews_to_Ratings_Ratio)")
 
 # 7.4. Basic statistics after cleaning
-print("\n📈 BASIC STATISTICS AFTER CLEANING:")
+print("\n BASIC STATISTICS AFTER CLEANING:")
 print(f"Total books: {df.shape[0]:,}")
 
 if 'Author' in df.columns:
@@ -680,7 +680,7 @@ if 'Number of Pages' in df.columns:
     print(f"Average pages per book: {df['Number of Pages'].mean():.0f}")
 
 # 7.5. Statistics for new features
-print("\n📊 STATISTICS FOR NEW DERIVED FEATURES:")
+print("\n STATISTICS FOR NEW DERIVED FEATURES:")
 
 if 'Book_Age' in df.columns:
     print(f"Book_Age (years since publication):")
@@ -698,7 +698,7 @@ if 'Reviews_to_Ratings_Ratio' in df.columns:
 # 7.6. Save cleaned data with new features
 cleaned_filename = "goodreads_dataset_COMPLETE_CLEANED.csv"
 
-print(f"\n💾 SAVING CLEANED DATASET TO FILE: {cleaned_filename}")
+print(f"\n SAVING CLEANED DATASET TO FILE: {cleaned_filename}")
 
 # List all columns to be saved
 all_columns = df.columns.tolist()
@@ -708,11 +708,11 @@ print(f"  New derived features: 2")
 
 df.to_csv(cleaned_filename, index=False, encoding='utf-8-sig', sep=';', decimal=',')
 
-print(f"✅ FILE SAVED SUCCESSFULLY!")
-print(f"📊 File size: {os.path.getsize(cleaned_filename) / (1024*1024):.2f} MB")
+print(f" FILE SAVED SUCCESSFULLY!")
+print(f" File size: {os.path.getsize(cleaned_filename) / (1024*1024):.2f} MB")
 
 # 7.7. Show sample of cleaned data
-print("\n🔎 SAMPLE OF CLEANED DATA WITH NEW FEATURES (first 5 rows):")
+print("\n SAMPLE OF CLEANED DATA WITH NEW FEATURES (first 5 rows):")
 
 # Select key columns to show
 sample_columns = []
@@ -754,14 +754,14 @@ print("   a) Book_Age: Current year - Publication year")
 print("   b) Reviews_to_Ratings_Ratio: Reviews / Ratings")
 print("6. ✅ Final validation and saving")
 
-print("\n📊 FINAL DATASET METRICS:")
+print("\n FINAL DATASET METRICS:")
 print(f"   • Original size: {original_shape[0]:,} rows, {original_shape[1]} columns")
 print(f"   • Cleaned size: {df.shape[0]:,} rows, {df.shape[1]} columns")
 print(f"   • Data kept: {(df.shape[0] / original_shape[0] * 100):.1f}% of rows")
 print(f"   • Missing values: {df.isnull().sum().sum()} (0 = perfect)")
 print(f"   • New features: 2")
 
-print("\n💾 OUTPUT:")
+print("\n OUTPUT:")
 print(f"   • Saved to: {cleaned_filename}")
 print(f"   • File size: {os.path.getsize(cleaned_filename) / (1024*1024):.2f} MB")
 print(f"   • Columns: {df.shape[1]} total")
